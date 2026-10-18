@@ -1,0 +1,6 @@
+description: "A cooldown diagnostic repeats the primary 24-hour rule."
+expect_message_contains: "must list alternatives to the primary cooldown"
+operations:
+  - op: set
+    target: robustness.diagnostic_cooldown_hours
+    value: [12, 24]

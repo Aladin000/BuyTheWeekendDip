@@ -1,0 +1,8 @@
+description: >
+  The warm-up split is collapsed to zero length by moving its start to the
+  development start, leaving no history to initialise rolling features.
+expect_message_contains: "must precede end"
+operations:
+  - op: set
+    target: splits.warmup.start_inclusive
+    value: "2020-01-01T00:00:00Z"

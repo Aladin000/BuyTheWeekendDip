@@ -1,0 +1,6 @@
+description: "The exit bar no longer follows from entry plus the hold length."
+expect_message_contains: "exit offset must be entry offset plus hold hours minus one"
+operations:
+  - op: set
+    target: strategy.exit_offset_bars
+    value: 13

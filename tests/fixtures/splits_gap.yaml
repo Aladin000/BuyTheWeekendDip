@@ -1,0 +1,6 @@
+description: "A gap is left between the development and held-out splits."
+expect_message_contains: "development must end exactly where the held-out split begins"
+operations:
+  - op: set
+    target: splits.development.end_exclusive
+    value: "2023-12-01T00:00:00Z"

@@ -1,0 +1,12 @@
+# Direct dependencies, pinned at their first tested use.
+# Target interpreter: Python 3.12
+#
+# Dependencies are added only at their first tested use, so every pin below
+# is a version this project has actually run on Python 3.12.
+
+PyYAML==6.0.3        # config/project.yaml parsing
+numpy==2.3.5         # Generator(PCG64) seed 20260901 (01_PROJECT_SPEC.md 7.6)
+pytest==9.1.1        # Stage 1 test suite
+scipy==1.18.1        # finite-sample t probabilities and distribution utilities
+statsmodels==0.15.0  # OLS with HC3 covariance and influence diagnostics
+matplotlib==3.11.1   # deterministic Stage 7 descriptive figures

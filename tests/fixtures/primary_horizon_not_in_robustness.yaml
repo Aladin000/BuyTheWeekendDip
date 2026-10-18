@@ -1,0 +1,6 @@
+description: "The primary horizon is not among the reported horizons."
+expect_message_contains: "robustness.horizons must be the primary and secondary horizons"
+operations:
+  - op: set
+    target: outcomes.primary_horizon_hours
+    value: 18

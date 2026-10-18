@@ -1,0 +1,6 @@
+description: "The interval level no longer matches 1 - alpha."
+expect_message_contains: "confidence_level must equal 1 - alpha"
+operations:
+  - op: set
+    target: inference.confidence_level
+    value: 0.9

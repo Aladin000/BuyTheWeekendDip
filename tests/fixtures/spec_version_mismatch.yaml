@@ -1,0 +1,6 @@
+description: "The configuration claims a specification version other than 1.5."
+expect_message_contains: "is not the active specification version"
+operations:
+  - op: set
+    target: meta.spec_version
+    value: "1.4"

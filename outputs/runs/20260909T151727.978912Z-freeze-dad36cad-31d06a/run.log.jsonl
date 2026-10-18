@@ -1,0 +1,3 @@
+{"event": "run_log_opened", "recorded_at_utc": "2026-09-09T15:17:28Z", "run_id": "20260909T151727.978912Z-freeze-dad36cad-31d06a"}
+{"event": "held_out_freeze_started", "held_out_outcomes_accessed": false, "papers_used_as_analytical_inputs": false, "recorded_at_utc": "2026-09-09T15:17:28Z", "run_id": "20260909T151727.978912Z-freeze-dad36cad-31d06a"}
+{"event": "held_out_freeze_completed", "held_out_outcomes_accessed": false, "manifest": "outputs/runs/20260909T151727.978912Z-freeze-dad36cad-31d06a/held-out-freeze.manifest.json", "papers_used_as_analytical_inputs": false, "recorded_at_utc": "2026-09-09T15:17:55Z", "run_id": "20260909T151727.978912Z-freeze-dad36cad-31d06a"}

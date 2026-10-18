@@ -1,0 +1,6 @@
+description: "A rate is written as an integer instead of a decimal."
+expect_message_contains: "expected a float written with a decimal point, got int"
+operations:
+  - op: set
+    target: costs.scenarios.primary.fee_per_side
+    value: 1

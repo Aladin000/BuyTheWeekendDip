@@ -1,0 +1,6 @@
+description: "A split boundary loses its UTC designator."
+expect_message_contains: "is not a timezone-aware UTC timestamp"
+operations:
+  - op: set
+    target: splits.development.start_inclusive
+    value: "2020-01-01 00:00:00"

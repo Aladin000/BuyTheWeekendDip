@@ -1,0 +1,6 @@
+description: "The titled primary strategy is not a declared variant."
+expect_message_contains: "titled_primary must be one of the declared variants"
+operations:
+  - op: set
+    target: strategy.titled_primary
+    value: "momentum"

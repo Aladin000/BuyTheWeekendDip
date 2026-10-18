@@ -1,0 +1,13 @@
+description: >
+  Acquisition begins too late to supply the 2,184 hours of uninterrupted
+  activity history the primary percentile requires. The acquisition start and
+  the warm-up split start are locked equal, so this single conceptual change
+  needs two edits.
+expect_message_contains: "fewer than the 2184 required"
+operations:
+  - op: set
+    target: coverage.raw_start_inclusive
+    value: "2019-12-01T00:00:00Z"
+  - op: set
+    target: splits.warmup.start_inclusive
+    value: "2019-12-01T00:00:00Z"

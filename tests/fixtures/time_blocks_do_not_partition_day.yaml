@@ -1,0 +1,10 @@
+description: "The time blocks no longer partition the 24 UTC hours."
+expect_message_contains: "must partition the 24 UTC hours exactly once"
+operations:
+  - op: set
+    target: calendar.time_blocks
+    value:
+      - {name: "00-05", start_hour: 0, end_hour: 5}
+      - {name: "06-11", start_hour: 6, end_hour: 11}
+      - {name: "12-17", start_hour: 12, end_hour: 17}
+      - {name: "18-22", start_hour: 18, end_hour: 22}

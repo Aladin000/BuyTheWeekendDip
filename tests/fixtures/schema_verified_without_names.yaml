@@ -1,0 +1,6 @@
+description: "The source schema is marked verified without recording field names."
+expect_message_contains: "expected_column_names must be populated"
+operations:
+  - op: set
+    target: source.expected_column_names
+    value: null

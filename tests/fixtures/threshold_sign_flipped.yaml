@@ -1,0 +1,6 @@
+description: "The negative shock threshold is given a positive sign."
+expect_message_contains: "must be < 0.0"
+operations:
+  - op: set
+    target: shock.negative_threshold
+    value: 2.5

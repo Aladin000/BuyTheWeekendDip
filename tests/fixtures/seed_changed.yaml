@@ -1,0 +1,6 @@
+description: "The locked project seed is altered."
+expect_message_contains: "conflicts with specification"
+operations:
+  - op: set
+    target: reproducibility.seed
+    value: 12345

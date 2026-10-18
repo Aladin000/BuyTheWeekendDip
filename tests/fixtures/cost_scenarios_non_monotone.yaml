@@ -1,0 +1,6 @@
+description: "The high-cost scenario is cheaper than the primary scenario."
+expect_message_contains: "must be non-decreasing across low, primary, high"
+operations:
+  - op: set
+    target: costs.scenarios.high.fee_per_side
+    value: 0.0001

@@ -1,0 +1,6 @@
+description: "Delayed execution is not exactly one bar after primary entry."
+expect_message_contains: "must be one bar after primary entry"
+operations:
+  - op: set
+    target: strategy.delayed_entry_offset_bars
+    value: 3

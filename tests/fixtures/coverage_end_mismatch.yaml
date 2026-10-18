@@ -1,0 +1,6 @@
+description: "Acquisition coverage ends before the held-out split."
+expect_message_contains: "raw_end_exclusive must equal splits.held_out.end_exclusive"
+operations:
+  - op: set
+    target: coverage.raw_end_exclusive
+    value: "2026-07-01T00:00:00Z"

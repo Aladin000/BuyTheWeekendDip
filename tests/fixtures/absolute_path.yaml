@@ -1,0 +1,6 @@
+description: "A project path is made machine specific."
+expect_message_contains: "must be relative to the project root"
+operations:
+  - op: set
+    target: paths.data_raw
+    value: "/tmp/data/raw"

@@ -1,0 +1,24 @@
+{
+  "accepted_complete_rows": 59861,
+  "anomaly_candidates": 39,
+  "artifact_sha256": {
+    "anomaly_candidates.csv": "a77c7be1b04d11065f73c372125f670f507b00e7b3cd08695f441f7acfbf6eb5",
+    "anomaly_review.csv": "8c4a2d2d054e61492b910f77763b5f19c592a0edf404c36c15317b2c517f7175",
+    "clean_hourly.csv": "65583c70d23b6ec889043bc45f6810ff91caca4325e8feef5e640936ddac27f7",
+    "excluded_rows.csv": "ecd8d9e3f1bb419399cdde7712b5c9a31ef2bf5520c80f39a8707ae2b66191f2",
+    "file_reconciliation.csv": "c9ff60db0761a3217e32532a0bae63321ae2673b88506b67cff3a2338f08f2c4",
+    "gaps.csv": "d6eb4664e6ac5ebf6944b4a6b957dcd61aca16da0cc1ae8f6d066472782bd020",
+    "schema_observations.csv": "2ba112cd9046893c4733c169c3aeb7b6320e107c3bdf58c0f34298e99ffd87c9"
+  },
+  "contiguous_segments": 19,
+  "duplicate_rows": 0,
+  "incomplete_rows_excluded": 0,
+  "invalid_rows": 0,
+  "manual_reviews_complete": true,
+  "missing_hours": 43,
+  "nonstandard_close_rows_excluded": 8,
+  "parsed_data_rows": 59869,
+  "schema_verified_in_config": true,
+  "source_files": 82,
+  "status": "complete"
+}

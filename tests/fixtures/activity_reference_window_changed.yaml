@@ -1,0 +1,6 @@
+description: "The percentile reference window is shortened."
+expect_message_contains: "required_history_hours must equal window_hours + reference_window"
+operations:
+  - op: set
+    target: activity.reference_window
+    value: 2000

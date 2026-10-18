@@ -1,0 +1,6 @@
+description: "A boundary uses a numeric offset instead of the locked Z form."
+expect_message_contains: "is not a timezone-aware UTC timestamp"
+operations:
+  - op: set
+    target: coverage.raw_start_inclusive
+    value: "2019-10-01T00:00:00+00:00"

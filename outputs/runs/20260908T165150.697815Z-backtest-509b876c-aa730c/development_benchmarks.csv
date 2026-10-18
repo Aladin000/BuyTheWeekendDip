@@ -1,0 +1,5 @@
+benchmark_name,cost_scenario,entry_time,exit_time,entry_price_raw,exit_price_raw,gross_cumulative_return,net_cumulative_return,exposure_note
+cash,not_applicable,2020-01-01T00:00:00Z,2024-01-01T00:00:00Z,,,0,0,zero_yield_usdt_cash
+btc_buy_and_hold,low,2020-01-01T00:00:00Z,2023-12-31T23:59:59.999000Z,7195.2399999999998,42283.580000000002,4.8766045329968151,4.8695553691382765,different_exposure_not_risk_matched
+btc_buy_and_hold,primary,2020-01-01T00:00:00Z,2023-12-31T23:59:59.999000Z,7195.2399999999998,42283.580000000002,4.8766045329968151,4.8625117267498972,different_exposure_not_risk_matched
+btc_buy_and_hold,high,2020-01-01T00:00:00Z,2023-12-31T23:59:59.999000Z,7195.2399999999998,42283.580000000002,4.8766045329968151,4.8531392041306889,different_exposure_not_risk_matched

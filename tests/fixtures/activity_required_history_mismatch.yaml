@@ -1,0 +1,6 @@
+description: "The required activity history no longer equals 24 + 2160."
+expect_message_contains: "required_history_hours must equal window_hours + reference_window"
+operations:
+  - op: set
+    target: activity.required_history_hours
+    value: 2000

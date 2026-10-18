@@ -1,0 +1,6 @@
+description: "Leverage is switched on, contrary to the locked design."
+expect_message_contains: "conflicts with specification"
+operations:
+  - op: set
+    target: strategy.allow_leverage
+    value: true

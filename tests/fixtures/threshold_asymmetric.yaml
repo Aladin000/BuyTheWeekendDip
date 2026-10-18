@@ -1,0 +1,6 @@
+description: "The positive comparison threshold is no longer symmetric."
+expect_message_contains: "symmetric counterpart"
+operations:
+  - op: set
+    target: shock.positive_threshold
+    value: 3.0

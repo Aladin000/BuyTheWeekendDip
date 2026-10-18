@@ -1,0 +1,212 @@
+{
+  "status": "COMPLETE",
+  "specification": {
+    "relative_path": "docs/01_PROJECT_SPEC.md",
+    "version": "1.5",
+    "sha256": "a27ba6787e53b961a0a8fe12c2e0b68daadb3f509fa24993737421c8474b25e7"
+  },
+  "configuration": {
+    "relative_path": "config/project.yaml",
+    "version": "1.1.0",
+    "sha256": "7b9af13823e7b2464545bc8225d0f0beb31e6992bd7822a7625aa3ded4903aa1"
+  },
+  "code_identity": {
+    "git_commit": "8dd2e65055134c26f14304760a8a522cfe9c8737",
+    "git_dirty": false,
+    "source_digest": "7a52514d13b24b3363ccb63ab0efc5faf82b4c1150af27623d3036d2e810920e",
+    "code_digest": "7247449e5a0068f1035e1fa48d57c53c6e4eab54a16427ae20bed2cf213bfc68",
+    "test_digest": "8fefeefb1a8cd3535c8afc09cb264f23574c75adbe82b66cf94a895b53092d6e",
+    "config_digest": "f1f96af4029a68e99e33d92c946d55349290be84b8df859367a36aec19548e5a",
+    "dependency_digest": "2c4b234085b6fff811ddeab73f9985877d0c8cff7b438e2e874e553f98dcc90a",
+    "file_digests": {
+      "config/anomaly_reviews.yaml": "fa4dca78cb0be5b6950670a0d3925e90ce2ee376feea55f02be88e38fcebf01b",
+      "config/project.yaml": "7b9af13823e7b2464545bc8225d0f0beb31e6992bd7822a7625aa3ded4903aa1",
+      "pyproject.toml": "9052e61a886ceae487da7c9ff9320fcd69ce93d3454e5f0ebbf960ffa8ac661f",
+      "requirements-lock.txt": "e43109cc92fa4d51f9b3b6450796465e8d6dadbcbf71a2efafb339891d9c74ae",
+      "requirements.txt": "900188cc61b2a0da80568e87da028746e812a5a173bd17236f64360ce5a95c31",
+      "src/__init__.py": "8569092d92deb96b876b87c5adcb4d936f2e53b0cfbade79089e7d1ccddf1c36",
+      "src/acquisition.py": "e1c118a4af6f12e8585f8ed33b2595c4b125603932eb19262b3b6fe652fd334c",
+      "src/artifacts.py": "152ec3bc5048e54754a7c7338d601c9e4851946b57c31169b33f2ec898f21ccf",
+      "src/backtest.py": "9cb4cd86c0416119f15979f05d1ba01a82b65cde94233f5a32718f94ebf2f6e8",
+      "src/config.py": "1180e5baddaabfaf474381f56cea277c2d9208daafe749224f965349593f0ed6",
+      "src/count_audit.py": "d91bbf2e918dbd96befd6295301bc231d14d88dcac85ed4d2c0d626b7a8ee629",
+      "src/events.py": "4b63dba38a526b121e3708c5eee095855c16a8a74638dc027d6f1010d8cbe07e",
+      "src/features.py": "effc5b2ff0f742b9e7a21a3171ec5031e4d68d7ab5ea09bbfffb47726715cef9",
+      "src/freeze.py": "43806bc1eea6bb33aeacc8502191aeef5ac3bbffca75784fc6da7fc9cd9339cf",
+      "src/heldout.py": "e2d3e4f6c805ec8761f751f3b93254b05cf54d9c8e2cda05579c75ad08a58114",
+      "src/inference.py": "04f33f55d932932888cd405c698ff922aa1a7e4a9aab283c221261bff33ad38f",
+      "src/outcomes.py": "3922273d508511b1bc2717a7507968ddcdbd9dc94f2d4de712aea6c448f938c5",
+      "src/paths.py": "4c2891f3035bd9090dac1f5b0e5b48efe35f329f64eab45b89314d983c1438b1",
+      "src/pipeline.py": "d2b1fb9e6d5b775431377819e622acc53d5bea0a44010585b5f20fb517ac6a74",
+      "src/rng.py": "f2bd55b1030abf57f9bfaeeea96b547cad925fedb02c238cb960aea4a30237ba",
+      "src/robustness.py": "096e908598901051e3ac03bb426c48c30a17574549ccb6752e7126ad94898ac1",
+      "src/validation.py": "2e8c5fe55b59b7c3cfa611bb7f8281670d601269e0edfea2462b7f26fed7edb2",
+      "tests/__init__.py": "05480c5780678a1bc42b6bd0eb8a69ca889221c4fbc3a60fd22bcfe4af3a6b01",
+      "tests/conftest.py": "57f2a624cc2fcbef4cf360fa58aeefa8e5df65c756c79239e2bd16607027daa4",
+      "tests/fixtures/_format.yaml": "48ecee5553340699b219f938f164e086b3696b4a231e3ea048e4483d2ce2a357",
+      "tests/fixtures/absolute_path.yaml": "2a31db7ff9affa2424f41b25f4d2148f40bca0b2605f99d514eb16fb5aec6516",
+      "tests/fixtures/activity_measures_reordered.yaml": "b4b72860dfbf1b676419a0f7a641459580c6eeefa97b7510d09a4536113bfcf9",
+      "tests/fixtures/activity_reference_window_changed.yaml": "67a9774dc26f7c7156bf900b51cedbd74638b3df722b4609faa89b20d09a72a6",
+      "tests/fixtures/activity_required_history_mismatch.yaml": "3ea41ab955caddb891ff721e9a386d8d9f6c1a29e0f5aada3600e85577653b2b",
+      "tests/fixtures/alpha_out_of_range.yaml": "3563c839e212e792f2c07f240faf26ef203c70750a4ee2caa7a590a9f40cbe3a",
+      "tests/fixtures/archive_month_mismatch.yaml": "ff400cee186b069b350311c97de86d0e1bc696f3de92bb028eb02d03fe2a443d",
+      "tests/fixtures/bit_generator_changed.yaml": "c3a7b095427f4d495a334105fbca7727cc2f685448cd41c8678c56cf6f229b5e",
+      "tests/fixtures/bootstrap_target_above_attempts.yaml": "b81f74dc616a4ae562b445fc95ed6b0249e752acf1bfd011d72ba35d54f1d74f",
+      "tests/fixtures/column_count_changed.yaml": "70f9ea86c80e6f21345fd5f7ded0e1d15dd715a7d4f7f3854d86c09a5d14254b",
+      "tests/fixtures/column_names_before_verification.yaml": "111d8dc3adea35b075f5be3b91599f79f7181a9c081221ca3e93b19e09fd1f0f",
+      "tests/fixtures/confidence_level_inconsistent.yaml": "fe76159e716935b135657a12a9177358a666552db7fcf099164e240a36c9022e",
+      "tests/fixtures/cooldown_not_positive.yaml": "a39209d9dbc97a0f2d8983c04527898f6f49658bcf5301a880e10faaa1fa0aca",
+      "tests/fixtures/cost_active_scenario_unknown.yaml": "46590afd971d03f2353a242839f7ccd7f4c603ea392e6a0da0cde2059f49378c",
+      "tests/fixtures/cost_negative_rate.yaml": "6480595834adde70ef103de4e36030b2cf83c826d1b1d1bb9d08233d9598a9bd",
+      "tests/fixtures/cost_scenarios_non_monotone.yaml": "186bbf1b108318287917ac6d9021bcd559ead65a573e38e4e8bc608abe276364",
+      "tests/fixtures/coverage_end_mismatch.yaml": "6fb3441d485c598dcfa026245b3ea5763fbf7316a34895de306a6391013b63d5",
+      "tests/fixtures/delayed_entry_inconsistent.yaml": "3aa7341d77f175ff617cec83a1ba9bb31e7775d88de41659d341f4e1707a05ef",
+      "tests/fixtures/diagnostic_cooldown_duplicates_primary.yaml": "f79965e26e1b8d248417ea8766c13ec18055731ee63ea0e7295db6695b74982b",
+      "tests/fixtures/exit_offset_inconsistent.yaml": "e728a38e5cecee05cedd40756d73755d8743480063883ff7bc4781bd4b39399b",
+      "tests/fixtures/h5_inside_holm_family.yaml": "154eaf3a4e02ac938a73129740783b2da934e0f965b391625edbb0950028bfef",
+      "tests/fixtures/hold_hours_not_primary_horizon.yaml": "095a745cfd01f9806bb479ccae1d780315a6fb4be72c919fd2fd7480fbfbe0fc",
+      "tests/fixtures/holm_family_members_shrunk.yaml": "4bf8cd99827207b53f9e609ac1e1ce090cfe048435a68c843edc52f2362f115a",
+      "tests/fixtures/holm_family_size_wrong.yaml": "4502d5545003db023bfa0947d57efaa153c7d8f9e32f6803e0a361052df8695a",
+      "tests/fixtures/leverage_enabled.yaml": "0a5cbdb0326faaddc78d0d056b9b31fc1b7f66a027d70a351ee85a25e43cde37",
+      "tests/fixtures/low_activity_threshold_changed.yaml": "36b5a0df01d56ef96470ad1475d15138c2e528496d4b7222a54da163fe85f40c",
+      "tests/fixtures/missing_required_key.yaml": "2cddf820e2a3e1c2bfd6973316e5bac9eef1f346b58fbb0781ba3c42a085c504",
+      "tests/fixtures/missing_top_level_section.yaml": "1d4cfd1a844b3c968904047ea550b94fa7f3160098a4557c5953d37aebc82337",
+      "tests/fixtures/path_escapes_root.yaml": "6e094c37eb9fad5fe7c06e3979c1455350fe661b0047b1eb311d0158b06abf26",
+      "tests/fixtures/primary_horizon_not_in_robustness.yaml": "9dcce0de0e48211f20ce58e922bdbd024acdba270599a908aa9d0bdc72fa1547",
+      "tests/fixtures/rest_fallback_enabled.yaml": "6afbd0998e381c2063f58798ea0c20ad898cfaefca341c8eb12276c56c2981a1",
+      "tests/fixtures/schema_verified_without_names.yaml": "6eebce4e2f89e962f14440e998a27ca7b893588c6b890d79f052407e71b785e3",
+      "tests/fixtures/seed_changed.yaml": "66cb13013b7086336703b752bb3b0822ea5a55e4587cb466ec6c6e1ff82d157e",
+      "tests/fixtures/short_warmup.yaml": "337f95fef60b7b742d28101ed6eb7a539d60ac0011e8e7804f6a3a5026431382",
+      "tests/fixtures/spec_version_mismatch.yaml": "f3f75cf89fe5616f830e8fcbc04b74beb69f169ccbf5f365da162c3125cfe036",
+      "tests/fixtures/splits_gap.yaml": "68e4cb74249bef4e1c27f3a7218ed5da2322780bd40b3297a8215dc973fadc11",
+      "tests/fixtures/splits_overlap.yaml": "e109ca7b842d2beef92eb80d122347bf50bc3c948489f7307f2d76dbb928aac2",
+      "tests/fixtures/splits_reversed.yaml": "1ee539423e35d1526a5a4ea2187d7c359112a78590376d3736ea689e95483dbb",
+      "tests/fixtures/threshold_asymmetric.yaml": "442eabc9d3b4147c70ef48608fa219f727b0d59f699f356d9f420259b7f67ebf",
+      "tests/fixtures/threshold_sign_flipped.yaml": "db43bb38356314dd2f92d97b9ea752b92fa4bd1deaf5a4c02d403e1c52160be7",
+      "tests/fixtures/time_block_reference_unknown.yaml": "9a22995b9d930027a0561d2d7da4913c331cf5f5c68ba066addcc812a8dcb52c",
+      "tests/fixtures/time_blocks_do_not_partition_day.yaml": "d06209406b6e53965b3c381e84d6223d2668902febf850076a3a9b1785ef7203",
+      "tests/fixtures/timestamp_naive.yaml": "7230dc7377eaafe3289073a6f1ad38a85713cd2893b037f0aa08df3549b1d12f",
+      "tests/fixtures/timestamp_not_hour_aligned.yaml": "d466ce7d846bfa46944869e844ac47d97a809add432c6d4a22d75b04e74ad818",
+      "tests/fixtures/timestamp_offset_form.yaml": "4c349feb0b6b034c68340f1b24e1a3c4ae79f85db06507a01bf49a8a331ba199",
+      "tests/fixtures/timestamp_unit_change_outside_coverage.yaml": "1d02ef792033110b42e06f7109cb2eea935038bb1a46edacd66ccc3d779c98d1",
+      "tests/fixtures/titled_primary_not_a_variant.yaml": "a08786fe9d0b7b7e1a0f602f530b34caff762565faa8c9c3d82f38a73d0faa76",
+      "tests/fixtures/tolerance_mismatch.yaml": "a87f4e4042a37bf9ac11ecaea617483907ead872c91dd30a931dff489ea162e5",
+      "tests/fixtures/unknown_leaf_key.yaml": "a5e98e6c756ddfe34aa94f72f63df877f7aecb7cbf334515e0d6672f977631db",
+      "tests/fixtures/unknown_top_level_key.yaml": "7abcb14d676134644c8f3457da0d9f5f7522a723939e11083e278e8bc89d117c",
+      "tests/fixtures/warmup_split_collapsed.yaml": "0deb65ad9ec4733dc375bf6cf4691712eef53e2bea220bbdd0de41abfc062c3f",
+      "tests/fixtures/weekend_includes_monday.yaml": "d1cee794059d8955bee239a851b30321f66272bf1aa75fd370184b883a98f107",
+      "tests/fixtures/wrong_type_bool_for_int.yaml": "a1b629116abd6dbb1c25550f245cf1ea21fbe2fec34e3a156983025d9e7442e5",
+      "tests/fixtures/wrong_type_int_for_float.yaml": "1e019575106e7dc363512169ae658b2f747a857b9a7d32fbf77b23f777dfad92",
+      "tests/fixtures/wrong_type_scalar_for_list.yaml": "37258f5656cd16e90db4cc7adbf0bac50c5119b04592c5e3a7412b1d0bba77b8",
+      "tests/fixtures/wrong_type_scalar_for_mapping.yaml": "5c85e7ec34a1f8873c9b03ae93b5a9be095943f6387e92eef8d7845a554d07a9",
+      "tests/fixtures/wrong_type_string_for_int.yaml": "165880ec6aded3fefcf7629757e3143aef6934ebc002ed4872f38086509ceff0",
+      "tests/test_acquisition.py": "99a9cc6590550778e1cbdcaff63744d13aefd98b878d3ee2133e56d606849ca0",
+      "tests/test_artifacts.py": "afe4ca63e4f67f2a82f00e2843f8df2c46df1782750b3b84d209f4da82e22bc0",
+      "tests/test_backtest.py": "494ede779c64cd82d7f7020d638475b0009ea2022e941558ddd66e4cac09f26a",
+      "tests/test_config_failclosed.py": "6fb1b527c1d488a4cacdd2fce231d9bbaac1094e4b54c6eea33081b93cef472c",
+      "tests/test_config_schema.py": "766faf344f507dd57370e966cab27b9875b56e5e94f25d4827d0c772b0e21260",
+      "tests/test_config_values.py": "e2403eab8c07c340c22a5ee4dcbb55ddc9d6da36c856a36aece0e4be7ba74dbb",
+      "tests/test_count_audit.py": "fca92807a59841708b54445f312991a701054d38ccdb28cc221ff535f57f4a85",
+      "tests/test_events.py": "e19a707d4a2c8e9b8dc05d5f8bf9aacd203b897948d70424d177e6efafaaf805",
+      "tests/test_features.py": "084ab7163fe5977d0f3f2c6144813cae060ce076763553c1bbeb52670debb00d",
+      "tests/test_freeze_and_heldout.py": "8c99c5325abfdf1a3e58f47fe243b2893469d18d3e015a3d901f27bd2105e37d",
+      "tests/test_import_and_cwd.py": "0495c5f218a88e92dfab234fc0405d5e27defd13d45bf793c336dfbefc682b3e",
+      "tests/test_inference.py": "e0495e74da0f389724040f1405bf41ad53384bc511851d4aed0a5f824905f268",
+      "tests/test_outcomes.py": "50ac6b0ae81b9d27a095ecfa2917d875a1d13a51625714073109f1ff1eae8448",
+      "tests/test_pipeline_modes.py": "500bfd46c872b4a5a872912f0a7e1f6d3152003d3be0c32bf57759a628c831dd",
+      "tests/test_rng.py": "0870a2066c8e999262df1de1a1c9e17a6f40cf01fe67576da84936e2d814ae41",
+      "tests/test_robustness.py": "4f591bfe087c845659a88184d9508a27547975b6d33f68b0f3975f90804edf81",
+      "tests/test_time_and_splits.py": "767f807e4dcf3088f4df2a513b514e3412399311985abe5051f2d31de34e56a0",
+      "tests/test_validation.py": "ef38929285705b066e7079850c28eefa8ab7dda3652cd70860ffa67288eb1fca"
+    }
+  },
+  "environment": {
+    "python_version": "3.12.13",
+    "python_implementation": "CPython",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "numpy_version": "2.3.5",
+    "packages": {
+      "numpy": "2.3.5",
+      "PyYAML": "6.0.3",
+      "pytest": "9.1.1",
+      "scipy": "1.18.1",
+      "statsmodels": "0.15.0",
+      "matplotlib": "3.11.1"
+    },
+    "executable": "python"
+  },
+  "seed": 20260901,
+  "accepted_manifests": {
+    "acquisition": {
+      "path": "outputs/runs/20260904T112326.201050Z-acquire-61466e5a-95fc17/acquisition.manifest.json",
+      "sha256": "d6687501fb9fb6fcb8227bb43b60a191bb114bcb49b9f8252255ad9bf75bd41e"
+    },
+    "validation": {
+      "path": "outputs/runs/20260904T150910.352311Z-validate-2114d1d3-82e4cb/validation.manifest.json",
+      "sha256": "1558d388374a7bd883e7057a67808668d992c128a685dbbdc588fc51657090ed"
+    },
+    "features": {
+      "path": "outputs/runs/20260906T003831.725064Z-features-92e5ff02-878985/features.manifest.json",
+      "sha256": "022b4e1c0a6a3f23f7aad737302b17d6d178b0f987ba6488e44a95434aa87685"
+    },
+    "count_only": {
+      "path": "outputs/runs/20260906T011026.732695Z-count-only-5b9fb859-11651d/count-audit.manifest.json",
+      "sha256": "9d04cd5646089bf5f8cfd6195f4362a2bcf96ae29abac5d0e6c675791f5149bb"
+    },
+    "development_outcomes": {
+      "path": "outputs/runs/20260907T231307.800702Z-development-5b472caa-33cd7d/development-outcomes.manifest.json",
+      "sha256": "1e8cb8100c374cd56aef596f03f8b908198c3ad55d34a1d57a85f26603c032a7"
+    },
+    "development_inference": {
+      "path": "outputs/runs/20260908T152939.777879Z-development-0f73422e-0d444a/development-inference.manifest.json",
+      "sha256": "dafa13aa144ff4ab25e08fc6d5efdbef93e4de08a0dc4462601f5368c2b4be90"
+    },
+    "development_backtest": {
+      "path": "outputs/runs/20260908T165150.697815Z-backtest-509b876c-aa730c/development-backtest.manifest.json",
+      "sha256": "c51cc4538b8139e8de1e3ae82ed36b7a77aa6fb4f0d4bbac96a2bcbd526536fb"
+    },
+    "development_robustness": {
+      "path": "outputs/runs/20260909T104454.475358Z-robustness-e052ad2d-dc18b3/development-robustness.manifest.json",
+      "sha256": "57d851454c78cc7131974b054eac991e9147140782cebcab18b184a89b4c9ccf"
+    }
+  },
+  "input_count": 212,
+  "input_set_sha256": "5faacce622ff702a4531b86a5c9c2949f3d2182a4363cbd2837254cec0167ef9",
+  "core_checks": [
+    {
+      "name": "pytest",
+      "command": [
+        "python",
+        "-m",
+        "pytest"
+      ],
+      "exit_code": 0,
+      "output_sha256": "98b7f05278f80ab6ea3544585fe7a20fa92f39a34deae1a8c823cd8fd4865498"
+    },
+    {
+      "name": "pip_check",
+      "command": [
+        "python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "exit_code": 0,
+      "output_sha256": "8315df2240b884a8840ed0122943fdb18dda02011635047361370e4c357599dc"
+    },
+    {
+      "name": "git_diff_check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "decision_log_sha256": "b6508501f28618986df32c2d6096d809faf5b2c7b33fae6f57ac42c9527c1afc",
+  "ledger_pre_authorisation_sha256": "8c316c86ca041ec049bd5d7c3dadee62176b22c9bf0e3fff249fefb6150b2ead",
+  "held_out_outcomes_accessed": false,
+  "papers_used_as_analytical_inputs": false
+}

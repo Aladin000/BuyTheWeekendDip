@@ -1,0 +1,5 @@
+description: "A whole configuration section is absent."
+expect_message_contains: "missing required key(s) ['bootstrap']"
+operations:
+  - op: delete
+    target: bootstrap

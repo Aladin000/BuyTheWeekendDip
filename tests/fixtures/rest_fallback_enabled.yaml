@@ -1,0 +1,6 @@
+description: "REST fallback is enabled, contrary to the locked data source."
+expect_message_contains: "allow_rest_fallback must be false"
+operations:
+  - op: set
+    target: source.allow_rest_fallback
+    value: true

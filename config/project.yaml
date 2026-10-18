@@ -1,0 +1,244 @@
+# Buy the Weekend Dip? - research configuration
+# Research definitions are documented in docs/PROJECT_SPEC.md.
+# Timestamps are quoted UTC strings; intervals include the start and exclude the end.
+
+meta:
+  project: "Buy the Weekend Dip?"
+  spec_version: "1.5"
+  spec_frozen_date: "2026-09-04"
+  # Historical identifier resolved by src/paths.py to docs/PROJECT_SPEC.md.
+  spec_path: "docs/01_PROJECT_SPEC.md"
+  config_version: "1.1.0"
+
+market:
+  exchange: "binance"
+  market_type: "spot"
+  symbol: "BTCUSDT"
+  interval: "1h"
+  timezone: "UTC"
+
+source:
+  base_url: "https://data.binance.vision"
+  path_pattern: "data/spot/monthly/klines/BTCUSDT/1h/BTCUSDT-1h-{year:04d}-{month:02d}.zip"
+  checksum_suffix: ".CHECKSUM"
+  first_month: "2019-10"
+  last_month: "2026-07"
+  local_digest_algorithm: "sha256"
+  allow_rest_fallback: false
+  expected_column_count: 12
+  # Binance kline column order, verified across all 82 monthly archives.
+  expected_column_names:
+    - "open_time"
+    - "open"
+    - "high"
+    - "low"
+    - "close"
+    - "volume"
+    - "close_time"
+    - "quote_asset_volume"
+    - "number_of_trades"
+    - "taker_buy_base_asset_volume"
+    - "taker_buy_quote_asset_volume"
+    - "ignore"
+  schema_verified: true
+  max_header_rows: 1
+
+# Binance uses milliseconds before 2025 and microseconds from January 2025.
+timestamps:
+  unit_change_at: "2025-01-01T00:00:00Z"
+  unit_before_change: "milliseconds"
+  unit_from_change: "microseconds"
+  close_time_rule: "open_time + 1 hour - 1 source quantum"
+  assign_calendar_from: "close_time"
+
+data_quality:
+  nonstandard_close_action: "exclude_as_gap"
+  largest_return_audit_count: 20
+  largest_open_gap_audit_count: 20
+  review_zero_base_volume: true
+  review_zero_quote_volume: true
+  review_zero_trade_count: true
+
+# Raw coverage includes the history needed to initialise rolling features.
+coverage:
+  raw_start_inclusive: "2019-10-01T00:00:00Z"
+  raw_end_exclusive: "2026-08-01T00:00:00Z"
+
+splits:
+  warmup:
+    start_inclusive: "2019-10-01T00:00:00Z"
+    end_exclusive: "2020-01-01T00:00:00Z"
+  development:
+    start_inclusive: "2020-01-01T00:00:00Z"
+    end_exclusive: "2024-01-01T00:00:00Z"
+  held_out:
+    start_inclusive: "2024-01-01T00:00:00Z"
+    end_exclusive: "2026-08-01T00:00:00Z"
+  membership_timestamp: "close_time"
+  containment: "signal_and_full_horizon_within_one_split"
+
+calendar:
+  weekend_iso_weekdays: [6, 7]
+  monday_iso_weekday: 1
+  time_blocks:
+    - name: "00-05"
+      start_hour: 0
+      end_hour: 5
+    - name: "06-11"
+      start_hour: 6
+      end_hour: 11
+    - name: "12-17"
+      start_hour: 12
+      end_hour: 17
+    - name: "18-23"
+      start_hour: 18
+      end_hour: 23
+  time_block_reference: "00-05"
+  time_block_source: "close_time"
+
+returns:
+  type: "log"
+  require_contiguous_previous_hour: true
+
+shock:
+  window_hours: 720
+  exclude_current_return: true
+  ddof: 1
+  negative_threshold: -2.5
+  positive_threshold: 2.5
+  strict_inequality: true
+
+events:
+  cooldown_hours: 24
+  cooldown_boundary_eligible: true
+  retain: "first_candidate"
+  sign_specific: true
+  elapsed_time_basis: "close_time"
+  continuous_through_warmup_and_splits: true
+  acceptance_ignores_future_information: true
+
+# Activity excludes the shock hour and is ranked against prior observations.
+activity:
+  primary_measure: "quote_volume"
+  secondary_measure: "trade_count"
+  window_hours: 24
+  exclude_shock_hour: true
+  reference_window: 2160
+  reference_same_segment_consecutive: true
+  tie_rule: "less_than_or_equal"
+  required_history_hours: 2184
+  # Exact fraction preserves the strict P < 1/3 boundary.
+  low_activity_threshold:
+    numerator: 1
+    denominator: 3
+
+controls:
+  rv_window_hours: 24
+  rv_excludes_shock_return: true
+  shock_magnitude_definition: "negative_z"
+
+outcomes:
+  primary_horizon_hours: 12
+  secondary_horizon_hours: [6, 24]
+  require_contiguous_path: true
+  cumulative_path_hours: 24
+
+inference:
+  alpha: 0.05
+  covariance: "HC3"
+  h1_h4_side: "one_sided_greater"
+  confidence_level: 0.95
+  confidence_side: "two_sided"
+  t_reference: "finite_sample_residual_df"
+  holm:
+    method: "holm"
+    family_size: 4
+    members: ["H1_model0", "H2_model1", "H3_model2", "H4_model2"]
+    unestimable_placeholder_p: 1.0
+  h5:
+    side: "two_sided"
+    in_holm_family: false
+  model3_min_events_per_cell: 10
+  model3_min_n_per_coefficient: 10
+  cooks_distance_rule: "4/N"
+
+# Resample complete UTC calendar months with replacement.
+bootstrap:
+  method: "calendar_month_block_pairs"
+  block_unit: "utc_month"
+  target_valid_replicates: 10000
+  max_attempts: 20000
+  with_replacement: true
+
+strategy:
+  initial_capital: 1.0
+  variants: ["all_shock", "weekend", "low_activity", "combined"]
+  titled_primary: "weekend"
+  principal_benchmark: "all_shock"
+  entry_offset_bars: 1
+  exit_offset_bars: 12
+  hold_hours: 12
+  delayed_entry_offset_bars: 2
+  delayed_exit_offset_bars: 13
+  max_concurrent_positions: 1
+  allocation_fraction: 1.0
+  allow_leverage: false
+  allow_short: false
+  use_stops: false
+  sparse_trade_label_threshold: 20
+  benchmarks: ["cash", "btc_buy_and_hold", "all_shock", "weekday_shock"]
+
+# Fees and slippage are decimal rates per side.
+costs:
+  scenarios:
+    low:
+      fee_per_side: 0.0005
+      slippage_per_side: 0.0001
+    primary:
+      fee_per_side: 0.0010
+      slippage_per_side: 0.0002
+    high:
+      fee_per_side: 0.0010
+      slippage_per_side: 0.0010
+  active_scenario: "primary"
+
+performance:
+  sharpe_periods_per_year: 365
+  risk_free_rate: 0.0
+  annualisation_basis: "exact_calendar_days"
+  daily_mark: "last_utc_hourly_mark"
+
+# Alternatives change one pre-specified dimension at a time.
+robustness:
+  thresholds: [-2.0, -2.5, -3.0]
+  horizons: [6, 12, 24]
+  activity_measures: ["quote_volume", "trade_count"]
+  execution: ["next_open", "delayed_one_hour"]
+  cost_scenarios: ["low", "primary", "high"]
+  inference: ["hc3", "month_block_bootstrap"]
+  positive_comparison_threshold: 2.5
+  diagnostic_cooldown_hours: [12, 48]
+  diagnostics:
+    - "calendar_year_stability"
+    - "leave_one_event_out"
+    - "leave_one_year_out"
+    - "weekend_contained_vs_monday_crossing"
+  one_family_at_a_time: true
+
+reproducibility:
+  seed: 20260901
+  bit_generator: "PCG64"
+  record_numpy_version: true
+  # Explicit decimal notation ensures YAML parses these as floating-point values.
+  atol: 1.0e-12
+  rtol: 1.0e-12
+  deterministic_sorting: true
+
+# All storage paths are relative to the project root.
+paths:
+  data_raw: "data/raw"
+  data_interim: "data/interim"
+  data_processed: "data/processed"
+  outputs_figures: "outputs/figures"
+  outputs_tables: "outputs/tables"
+  outputs_runs: "outputs/runs"

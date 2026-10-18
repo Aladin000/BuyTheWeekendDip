@@ -1,0 +1,9 @@
+# Tool configuration only. The project is run from its root with relative
+# paths and is not installed as a
+# distributable package, so no build backend is declared.
+
+[tool.pytest.ini_options]
+minversion = "9.0"
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-q --strict-markers"

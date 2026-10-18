@@ -1,0 +1,6 @@
+description: "The omitted reference time block is not one of the four blocks."
+expect_message_contains: "is not a declared block"
+operations:
+  - op: set
+    target: calendar.time_block_reference
+    value: "03-08"

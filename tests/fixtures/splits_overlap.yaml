@@ -1,0 +1,6 @@
+description: "The held-out split starts before development ends."
+expect_message_contains: "development must end exactly where the held-out split begins"
+operations:
+  - op: set
+    target: splits.held_out.start_inclusive
+    value: "2023-12-01T00:00:00Z"

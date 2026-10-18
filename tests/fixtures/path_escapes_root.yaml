@@ -1,0 +1,6 @@
+description: "A project path escapes the project root."
+expect_message_contains: "must not escape the project root"
+operations:
+  - op: set
+    target: paths.data_processed
+    value: "../processed"

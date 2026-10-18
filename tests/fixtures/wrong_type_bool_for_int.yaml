@@ -1,0 +1,6 @@
+description: "A boolean is supplied where an integer is required."
+expect_message_contains: "expected an integer, got bool"
+operations:
+  - op: set
+    target: shock.ddof
+    value: true

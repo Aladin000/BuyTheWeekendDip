@@ -1,0 +1,6 @@
+description: "The robustness activity list no longer names primary then secondary."
+expect_message_contains: "must be the primary then secondary activity measure"
+operations:
+  - op: set
+    target: robustness.activity_measures
+    value: ["trade_count", "quote_volume"]

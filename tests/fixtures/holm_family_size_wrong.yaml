@@ -1,0 +1,6 @@
+description: "The Holm family size no longer matches the declared members."
+expect_message_contains: "family_size must equal the number of declared family members"
+operations:
+  - op: set
+    target: inference.holm.family_size
+    value: 3

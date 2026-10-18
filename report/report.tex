@@ -1,0 +1,451 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{newtxtext,newtxmath}
+\usepackage{microtype}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{cite}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\titleformat{\section}{\centering\normalsize\scshape}{\thesection.}{0.5em}{}
+\titlespacing*{\section}{0pt}{12pt}{5pt}
+\renewcommand{\thesubsection}{\Alph{subsection}}
+\titleformat{\subsection}{\normalsize\itshape}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{6pt}{2pt}
+
+\renewcommand{\thetable}{\Roman{table}}
+\captionsetup[table]{name=TABLE, labelsep=newline, font={footnotesize,sc},
+  justification=centering, skip=4pt}
+\captionsetup[figure]{name=Fig., labelsep=period, font=footnotesize}
+\captionsetup[subfigure]{font=footnotesize}
+
+\setlist{itemsep=1pt, topsep=3pt, leftmargin=2.2em}
+\renewcommand{\arraystretch}{1.1}
+
+\graphicspath{
+  {../outputs/runs/20260908T152939.777879Z-development-0f73422e-0d444a/}
+  {../outputs/runs/20260908T165150.697815Z-backtest-509b876c-aa730c/}
+  {../outputs/runs/20260910T133543.269946Z-held-out-dad36cad-632a5e/}
+}
+
+\input{generated/results.tex}
+
+\newcommand{\StudentName}{Matteo Cannata}
+\newcommand{\StudentEmail}{matteo.cannata26@imperial.ac.uk}
+\newcommand{\SubmissionDate}{15 October 2026}
+
+\begin{document}
+
+\begin{center}
+\includegraphics[width=4.8cm]{../logo/Imperial_College_London_new_logo.png}\par
+\vspace{7pt}
+{\normalsize\bfseries\StudentName\par}
+\vspace{2pt}
+{\footnotesize\SubmissionDate\par}
+\vspace{10pt}
+{\fontsize{17}{21}\selectfont\bfseries Buy the Weekend Dip?\par}
+\vspace{3pt}
+{\normalsize\bfseries Bitcoin Reversals After Extreme Sell-Offs\par}
+\vspace{7pt}
+{\small\href{mailto:\StudentEmail}{\StudentEmail}\par}
+\vspace{8pt}
+{\color{black}\rule{4.8cm}{0.4pt}\par}
+\end{center}
+\vspace{4pt}
+
+\noindent{\small\bfseries\textit{Abstract}: Does Bitcoin rebound after an extreme one-hour sell-off, and is the rebound larger at weekends or when trading activity before the sell-off was low? This study tests both questions on hourly Binance BTCUSDT spot data. The primary rules and tests were fixed before outcomes were inspected; 2020 to 2023 was used for development, and January 2024 to July 2026 was held out for one primary historical evaluation. In both periods the average 12-hour log return after a negative shock was slightly negative (\DevAllMean{} and \HoAllMean{}), and none of H1 to H4 was supported held out. The all-shock rule returned \HoAllNet{} held out after assumed costs; the weekend rule, which gained \DevWeekendNet{} in development, returned \HoWeekendNet{} held out.\par}
+\vspace{5pt}
+
+\section{Hypothesis Pitch}\par
+
+After an unusually large one-hour fall in BTCUSDT, I expect a partial recovery over the next 12 hours, with a larger rebound at weekends or after 24 hours of low trading activity. My central question is whether weekend timing adds information beyond the activity observed before the fall.
+
+Temporary selling pressure could push prices down before easing, allowing a rebound. A fall driven by new information could instead continue. Lower preceding activity might accompany stronger temporary price pressure, but this is a proposed explanation: the hourly candles cannot identify its cause.
+
+Previous evidence of short-term Bitcoin mean reversion and reversal after negative hourly shocks makes a rebound plausible~\cite{denicola,miralles}. Evidence of stronger daily reversal strategy returns across cryptocurrency pairs when volume is low relative to its recent trend motivates testing activity as well~\cite{bianchi}. These findings leave open whether pre-shock activity matters within BTCUSDT and whether weekend timing adds information beyond it.
+
+In De Nicola's Bitstamp sample, weekend volume was about 20\% below the weekly average~\cite{denicola}, but that does not establish a weekend rebound. A quiet weekday could resemble a quiet weekend. I therefore compare weekend timing and activity separately, then ask whether the weekend association remains after adding activity and other controls. I measure activity using the USDT value traded before the shock. This records completed trading, but does not reveal the available orders, spreads or depth.
+
+Four predictions were fixed before outcomes were inspected. I would set aside each unless the held-out data show:
+\begin{enumerate}[label=\arabic*)]
+\item a positive mean 12-hour return after negative shocks (H1);
+\item a higher mean after weekend than weekday shocks (H2);
+\item a higher return after lower pre-shock activity (H3);
+\item a positive weekend association after controlling for activity, shock size, recent volatility and time of day (H4).
+\end{enumerate}
+Each needs the expected sign and a Holm-adjusted one-sided $p$-value below 0.05. An unsupported test does not establish that the effect is absent; all planned analyses continue. Secondary H5 compares positive and negative shocks. Separately, I would reject the trading case if development gains failed held out or disappeared after costs.
+
+\newpage
+\section{Data Pipeline}
+
+Archives are downloaded and verified, cleaned and divided into contiguous segments. Past-only features identify shock candidates; chronological cooldown sets event acceptance. Counts and timestamp-only availability are audited before outcomes. Accepted negative events feed the event study and simulated trades. Development checks precede the freeze of rules and inputs and the held-out evaluation.
+
+\subsection{Data Source and Snapshot}
+
+The code downloads \SourceFiles{} official Binance BTCUSDT spot monthly archives~\cite{binance}, verifies each ZIP against Binance's published SHA-256 checksum and preserves it unchanged in \texttt{data/raw/}. Their hourly OHLC prices, volume and trade counts cover October 2019 to July 2026. The 6-, 12- and 24-hour analyses all use these one-hour candles. No credentials are needed.
+
+\subsection{Sample Periods}
+
+October to December 2019 warms up rolling features. Development covers 2020 to 2023; January 2024 to July 2026 is held out. Weekend and split labels use the unrounded UTC source close time.
+
+\subsection{Cleaning and Missing Data}
+
+Binance switched spot archive timestamps from milliseconds to microseconds on 1 January 2025~\cite{binance}. The parser enforces the expected unit, 12-column schema and numeric/OHLC consistency. Invalid values or duplicate/disordered timestamps stop validation; the snapshot contains none (Table~\ref{tab:quality}).
+
+\ExcludedRows{} non-standard close-time rows coinciding with exchange interruptions are excluded. The cleaned grid has \MissingHours{} missing hours, including these exclusions: 4 in warm-up, 39 in development and none held out, forming \Segments{} contiguous segments. Manual raw-file checks retained all \AnomalyCandidates{} distinct rows identified by the 20 largest returns and 20 largest close-to-next-open gaps.
+
+No candle is imputed. Gaps invalidate crossing returns and outcomes and restart rolling histories. Bitcoin needs no split or dividend adjustment.
+
+\begin{table}[ht]
+\centering\small
+\caption{Data quality (left) and hours each calculation can use (right)}
+\label{tab:quality}
+\begin{tabular}[t]{@{}lr@{}}
+\toprule
+Raw archive, Oct 2019 to Jul 2026 & Rows \\
+\midrule
+Monthly files & \SourceFiles{} \\
+Rows parsed & \ParsedRows{} \\
+Excluded (non-standard close) & \ExcludedRows{} \\
+Duplicate / invalid rows & \DuplicateRows{} / \InvalidRows{} \\
+Clean rows & \CleanRows{} \\
+Missing hours & \MissingHours{} \\
+\bottomrule
+\end{tabular}\hspace{2em}
+\begin{tabular}[t]{@{}lrr@{}}
+\toprule
+ & Development & Held out \\
+\midrule
+\QualityRows
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Shock Events and Features}
+
+Features use information available at the shock close. The hourly log return is $r_t=\ln(C_t/C_{t-1})$, requiring a contiguous previous hour. The score $z_t=(r_t-\bar r)/s$ uses the mean $\bar r$ and sample standard deviation $s$ of the previous 720 returns (30 days), excluding $r_t$. A candle with $z_t<-2.5$ is a negative-shock candidate.
+
+Candidates are processed chronologically: accept the first, then suppress same-sign candidates less than 24 hours after the last accepted event. This limits repeated signals from one sell-off. Future prices and outcomes never determine acceptance.
+
+Pre-shock activity $A_t$ is the USDT quote volume of the previous 24 hours, excluding the shock hour. Its rank $P_t$ is the share of the previous 2,160 values of $A$ (90 days) less than or equal to it. Each reference value needs 24 prior hours, so the full rank requires 2,184 uninterrupted hours. Regressions use $1-P_t$; low activity means $P_t<1/3$. Quote volume measures activity, not liquidity.
+
+Controls are shock size ($-z_t$), realised volatility of the previous 24 returns, and four six-hour UTC time-of-day blocks.
+
+The outcome $\ln(C_{t+12}/C_t)$ is the 12-hour log return after the shock, available only when all 12 following hours are contiguous and within one split. Table~\ref{tab:events} reconciles counts audited before outcomes.
+
+\begin{center}
+\begin{minipage}{\linewidth}
+\centering\small
+\captionof{table}{Shock events at each step}
+\label{tab:events}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+ & Development & Held out \\
+\midrule
+\EventRows
+\bottomrule
+\end{tabular}
+\end{minipage}
+\end{center}
+
+Event acceptance and later eligibility are separate. Of the \DevEvents{} accepted development negative shocks, \DevSampleHOneN{} have complete 12-hour outcomes and \DevSampleHThreeN{} also have every controlled-regression covariate (Table~\ref{tab:events}). Missing features do not change accepted event identities. The all-shock and weekend strategies require valid execution bars; low-activity and combined strategies additionally require an activity rank.
+
+\section{Strategy and Backtest}
+
+\subsection{Key Results}
+
+\begin{table}[ht]
+\centering\small
+\caption{Key results at the primary cost (10 bp fee and 2 bp slippage per side)}
+\label{tab:key}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrrrrrr@{}}
+\toprule
+ & \multicolumn{4}{c}{Development, in-sample} & \multicolumn{4}{c}{Held out, out-of-sample} \\
+\cmidrule(lr){2-5}\cmidrule(l){6-9}
+Strategy & Trades & Net return & Sharpe & Max DD & Trades & Net return & Sharpe & Max DD \\
+\midrule
+\KeyResultRows
+\bottomrule
+\end{tabular}
+
+\smallskip
+\parbox{\linewidth}{\footnotesize Net return is the cumulative return after costs over the whole period. The Sharpe ratio uses daily returns, annualised with 365 days and a zero risk-free rate. The recorded daily series samples equity at midnight after any new entry, so a midnight entry cost is assigned to the preceding day. This boundary convention can slightly change Sharpe relative to a mark immediately before the new entry. Maximum drawdown (Max DD) is measured on the hourly equity curve. The held-out combined rule has \HoCombinedTrades{} trades; its annualised Sharpe is descriptive and highly unstable. Buy and hold has a different exposure and is not risk-matched; n/r means not reported.}
+\end{table}
+
+Table~\ref{tab:key} gives the required metrics. At the primary settings, all four strategies lost money held out after costs. The weekend rule, the main candidate, returned \DevWeekendNet{} in development (Sharpe \DevWeekendSharpe{}) and \HoWeekendNet{} out-of-sample (Sharpe \HoWeekendSharpe{}, maximum drawdown \HoWeekendDrawdown{}). Buying every shock returned \DevAllNet{} and \HoAllNet{}. Over the held-out period, simply holding Bitcoin returned \HoBuyHold{}.
+
+\subsection{Trading Rules}
+
+When a qualifying negative-shock candle closes, the rule buys BTC at the next hour's open and sells at the close 12 hours after the shock (entry $O_{t+1}$, exit $C_{t+12}$). Each trade invests 100\% of the account, without leverage, short selling or a stop-loss. One position is open at a time; otherwise the account holds USDT. Four separate accounts start at 1.0 and trade all shocks, weekend shocks, low-activity shocks, or shocks that are both. All four are reported. Missing entry-to-exit hours cancel the trade. Event-study log returns begin at the shock close; portfolio wealth compounds arithmetic net trade returns from next-open execution after costs.
+
+\subsection{Transaction Costs}
+
+Costs are charged on every fill. With fee $f$ and slippage $s$ per side, the buy price is $O(1+s)$, the sell price is $C(1-s)$, and each trade multiplies wealth by $(1-f)^2\,C(1-s)/\big(O(1+s)\big)$. The primary case assumes $f=10$~bp and $s=2$~bp, about 24~bp per round trip. A low case (5~bp fee, 1~bp slippage) and a high case (10~bp, 10~bp) were fixed in advance.
+
+\subsection{Statistical Tests}
+
+Each hypothesis is tested with an ordinary least-squares regression on shock events, separately by period. Model~0 estimates the mean outcome (H1). Model~1 adds a weekend indicator (H2). Model~2 adds the activity score, shock size, volatility and time-of-day controls, giving H3 (activity) and H4 (weekend after controls). Secondary Model~3 adds a weekend $\times$ activity interaction. HC3 standard errors account for unequal residual variance, but cannot rule out dependence between shocks. Holm's correction limits false positives across the four one-sided H1 to H4 tests. As a check on within-month dependence, a bootstrap resamples whole calendar months 10,000 times and refits each model.
+
+\subsection{Returns After a Shock}
+
+The rebound the hypothesis predicts does not appear on average. The mean 12-hour log return after a negative shock is \DevAllMean{} in development and \HoAllMean{} out-of-sample, against \DevDriftMean{} and \HoDriftMean{} for eligible non-candidate hours (Table~\ref{tab:groups}). Medians are slightly positive (\DevAllMedian{} and \HoAllMedian{}), so the negative means are pulled down by a tail of continued falls. The weekend group is positive in development (\DevWeekendMean{}, $N=\DevWeekendN$) but negative out-of-sample (\HoWeekendMean{}, $N=\HoWeekendN$). The average path (Fig.~\ref{fig:path}) is small and noisy; in both periods it is below zero at 12 hours and stays positive only from hour 19 in development and hour 18 out-of-sample.
+
+\begin{table}[ht]
+\centering\small
+\caption{12-hour log return after shock events}
+\label{tab:groups}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrrrrrr@{}}
+\toprule
+ & \multicolumn{4}{c}{Development} & \multicolumn{4}{c}{Held out} \\
+\cmidrule(lr){2-5}\cmidrule(l){6-9}
+Group & N & Mean & Median & Hit rate & N & Mean & Median & Hit rate \\
+\midrule
+\GroupRows
+\bottomrule
+\end{tabular}
+
+\smallskip
+\parbox{\linewidth}{\footnotesize Hit rate is the share of events with a positive 12-hour return. Non-candidate hours satisfy $z_t\ge-2.5$, including positive extremes; their windows overlap, so this row is context, not a formal comparison.}
+\end{table}
+
+The secondary event-study means are also uncertain. At 6 hours they are \DevSixMean{} ($N=\DevSixN$, HC3 95\% CI \DevSixCI{}) in development and \HoSixMean{} ($N=\HoSixN$, CI \HoSixCI{}) held out; at 24 hours they are \DevTwentyFourMean{} ($N=\DevTwentyFourN$, CI \DevTwentyFourCI{}) and \HoTwentyFourMean{} ($N=\HoTwentyFourN$, CI \HoTwentyFourCI{}).
+
+The direct group comparisons in Table~\ref{tab:groupcomparisons} use indicator regressions with HC3 uncertainty and a calendar-month block bootstrap. The group medians and counts are in Table~\ref{tab:groups}; the combined group is sparse, especially in development ($N=\DevCombinedN$). Its development block interval excludes zero while the HC3 interval includes it, so that small-cell comparison is not a stable finding.
+
+\begin{table}[ht]
+\centering\footnotesize
+\caption{12-hour group differences in mean log return}
+\label{tab:groupcomparisons}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}llrrrcc@{}}
+\toprule
+Period & Difference & $N_1$ & $N_0$ & Estimate & HC3 95\% CI & Block 95\% CI \\
+\midrule
+\GroupComparisonRows
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[ht]
+\centering
+\begin{subfigure}{0.49\textwidth}
+  \includegraphics[width=\linewidth]{development_average_path.png}
+  \caption{Development, $N=\DevAllN$}
+\end{subfigure}\hfill
+\begin{subfigure}{0.49\textwidth}
+  \includegraphics[width=\linewidth]{held_out_average_path.png}
+  \caption{Held out, $N=\HoAllN$}
+\end{subfigure}
+\caption{Average cumulative log return in the 24 hours after a negative shock.}
+\label{fig:path}
+\end{figure}
+
+\subsection{Hypothesis Test Results}
+
+None of H1 to H4 is supported in the held-out period (Table~\ref{tab:hyp}). All four primary HC3 intervals include zero in both periods, as do their month-block bootstrap intervals. The two weekend estimates change sign between the periods. The weekend difference (H2) is \DevHTwoEst{} in development but \HoHTwoEst{} out-of-sample. After controls (H4), the development weekend coefficient falls slightly, from \DevWeekendCCEst{} to \DevHFourEst{} on the same events; out-of-sample it moves from \HoWeekendCCEst{} to \HoHFourEst{}. The activity coefficient (H3) is \DevHThreeEst{} and \HoHThreeEst{}, with intervals of \DevHThreeCI{} and \HoHThreeCI{}: too wide to show any reliable association.
+
+\begin{table}[ht]
+\centering\footnotesize
+\caption{Main hypothesis tests}
+\label{tab:hyp}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}llrrcrrrcrc@{}}
+\toprule
+ & & \multicolumn{4}{c}{Development} & \multicolumn{5}{c}{Held out} \\
+\cmidrule(lr){3-6}\cmidrule(l){7-11}
+ & Test & N & Estimate & 95\% CI & $p$ & N & Estimate & 95\% CI & $p$ & Supported \\
+\midrule
+\HypothesisRows
+\bottomrule
+\end{tabular}
+
+\smallskip
+\parbox{\linewidth}{\footnotesize H1 is the mean 12-hour log return (Model 0); H2 the weekend minus weekday difference (Model 1); H3 the activity score and H4 the weekend coefficient, both in Model 2. Intervals are two-sided 95\% HC3 intervals; $p$ is the Holm-adjusted one-sided value. Only the held-out columns decide support.}
+\end{table}
+
+Table~\ref{tab:inferencedetails} gives HC3 standard errors, raw one-sided $p$-values, block intervals and resample counts. HC3/Holm is primary; the bootstrap checks robustness.
+
+\begin{table}[ht]
+\centering\footnotesize
+\caption{Additional inference details for H1 to H4}
+\label{tab:inferencedetails}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}llrrrcc@{}}
+\toprule
+Period & Test & HC3 SE & Raw $p$ & Holm $p$ & Block 95\% CI & Draws A/V/E/R \\
+\midrule
+\InferenceDetailRows
+\bottomrule
+\end{tabular}
+
+\smallskip
+\parbox{\linewidth}{\footnotesize Draws A/V/E/R are attempted/valid/empty/rank-deficient month-block bootstrap replicates. The target is 10,000 valid draws per estimate, with at most 20,000 attempts. Standard errors and intervals use return-per-unit coefficients displayed as percentages.}
+\end{table}
+
+The secondary results lie outside the Holm family, use two-sided unadjusted tests, and are descriptive only. The Model~3 interaction is negative in both periods: \DevInteractionEst{} in development (HC3 95\% CI \DevInteractionCI{}, block CI \DevInteractionBoot{}, $p=\DevInteractionP$), based on only \DevCombinedN{} weekend low-activity events, and \HoInteractionEst{} out-of-sample (HC3 CI \HoInteractionCI{}, block CI \HoInteractionBoot{}, $p=\HoInteractionP$). The held-out HC3 interval barely excludes zero, while its block interval includes zero; this pattern is uncertain and requires a new pre-specified test.
+
+H5 compares 12-hour returns after positive and negative shocks. The positive-minus-negative coefficient, conditional on absolute standardised shock size and the other specified covariates, is \DevHFiveEst{} in development (HC3 CI \DevHFiveCI{}, block CI \DevHFiveBoot{}, $p=\DevHFiveP$) and \HoHFiveEst{} held out (HC3 CI \HoHFiveCI{}, block CI \HoHFiveBoot{}, $p=\HoHFiveP$). The development HC3 and block intervals disagree about zero; held-out evidence does not establish asymmetry. With one cooldown shared by both signs, the coefficient is positive in both periods (\DevHFiveAnyEst{}, $p=\DevHFiveAnyP$ in development; \HoHFiveAnyEst{}, $p=\HoHFiveAnyP$ held out), but statistically distinguishable from zero only in development.
+
+\subsection{Backtest and Cost Sensitivity}
+
+Most rules lose before costs, and costs reduce every strategy's return (Table~\ref{tab:costs}, Fig.~\ref{fig:equity}).
+
+\begin{center}
+\begin{minipage}{\linewidth}
+\centering\small
+\captionof{table}{Cumulative return before costs and under each cost case}
+\label{tab:costs}
+\begin{tabular}{@{}llrrrrr@{}}
+\toprule
+Period & Strategy & Gross & Low cost & Primary & High cost & Break-even \\
+\midrule
+\CostRows
+\bottomrule
+\end{tabular}
+
+\smallskip
+\parbox{\linewidth}{\footnotesize Break-even is the cost per side at which the strategy ends where it started; ``none'' means it loses even at zero cost.}
+\end{minipage}
+\end{center}
+
+Held-out all-shock return falls from \HoAllGross{} gross to \HoAllNet{} net. The development weekend rule breaks even at \DevWeekendBreakEven{} per side, while the only held-out rule positive gross, low activity (\HoLowGross{}), breaks even at \HoLowBreakEven{}.
+
+\begin{figure}[ht]
+\centering
+\begin{subfigure}{0.49\textwidth}
+  \includegraphics[width=\linewidth]{development_equity_curves.png}
+  \caption{Development}
+\end{subfigure}\hfill
+\begin{subfigure}{0.49\textwidth}
+  \includegraphics[width=\linewidth]{held_out_equity_curves.png}
+  \caption{Held out}
+\end{subfigure}
+\caption{Net equity of the four rules at the primary cost (top panels), and the weekend rule before and after costs (bottom panels).}
+\label{fig:equity}
+\end{figure}
+
+\subsection{Robustness Checks}
+
+Each robustness check was fixed in advance and changes one setting at a time (Table~\ref{tab:robust}). In development, \DevWeekendPositiveVariants{} of the \DevWeekendVariants{} threshold, horizon, delay and cooldown variants of the weekend rule are positive, but the sign flips with a one-hour entry delay or a different cooldown, and removing a single event moves the result anywhere from \DevLeaveEventLow{} to \DevLeaveEventHigh{}. Out-of-sample, \HoWeekendPositiveVariants{} of the \HoWeekendVariants{} variants are positive: the $-3.0$ threshold, with only \HoStrictThresholdTrades{} trades, and the 48-hour cooldown. The rule loses money in each of the \HoWeekendYears{} held-out calendar years, and removing any single event still leaves it between \HoLeaveEventLow{} and \HoLeaveEventHigh{}. For H1, the confidence interval includes zero under every threshold, horizon and cooldown in both periods.
+
+\begin{center}
+\begin{minipage}{\linewidth}
+\centering\small
+\captionof{table}{Weekend rule when one setting is changed (net return at the primary cost)}
+\label{tab:robust}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+ & \multicolumn{2}{c}{Development} & \multicolumn{2}{c}{Held out} \\
+\cmidrule(lr){2-3}\cmidrule(l){4-5}
+Setting & Net return & Trades & Net return & Trades \\
+\midrule
+\RobustnessRows
+\bottomrule
+\end{tabular}
+\end{minipage}
+\end{center}
+
+\subsection{Interpretation}
+
+I take three lessons from the results. First, there is no reliable positive mean return at the fixed 12-hour horizon in this Binance sample. Earlier reversal studies used different venues, periods and event definitions, so this does not directly refute them. Second, the development weekend gain was fragile: it rested on \DevWeekendTrades{} trades, its five largest trades made up \DevWeekendTopFiveShare{} of total absolute profit and loss, and its sign changed with the cooldown or entry time. The held-out loss confirms that this gain did not persist. Third, at about 24~bp per round trip, the assumed costs leave little room for a small rebound to become a net trading gain.
+
+\section{Methodology Defense}
+
+\subsection{Universe}
+
+I chose BTCUSDT because it trades through weekends and Binance provides a public, checksummed history. Hourly candles define a signal from a completed bar and entry at the next open; they do not establish actual fills. This tests one surviving pair on one exchange, so findings may differ for other coins or venues.
+
+\subsection{Train/Test Split}
+
+I used 2020 to 2023 to develop the rule and kept the next 31 months, with \HoSampleHOneN{} usable shocks, for evaluation. A random split would mix nearby shocks and let later market conditions influence choices made for earlier ones. The chronological split asks whether the same rule survives a later period. If the market changed after 2023, that limits how far the development result carries forward.
+
+\subsection{Signal Construction}
+
+A fixed price-drop cut would flag many hours in volatile years and few in calm years. I instead scale each return by the previous 30 days, so the $-2.5$ threshold describes an unusual move relative to recent conditions; it yields \DevEvents{} development and \HoEvents{} held-out events. I fixed 2.5 before inspecting outcomes as a convention for relative extremeness, with 2.0 and 3.0 as sensitivity checks. The cutoff is not claimed to be optimal. The 24-hour cooldown keeps the first candidate from a sell-off. Counting every extreme hour would treat one episode as several events, while choosing the largest would require later prices. I chose 12 hours as a short window in which temporary pressure might fade, with 6 and 24 hours fixed as checks.
+
+\subsection{Transaction Cost Assumptions}
+
+Next-open fills follow the completed shock and remain a simulation assumption. The 10~bp fee is fixed; 2~bp slippage allows for spread and delay without order-book estimates. Higher costs worsen every return, and a one-hour delay reverses the development weekend gain (Table~\ref{tab:robust}).
+
+\subsection{Activity Measure}
+
+I use prior 24-hour USDT quote volume to summarise a full day before the shock. Ranking against 90 days provides a longer recent benchmark and adjusts for changing volume levels. H3 uses the continuous score $1-P_t$; the pre-set $P_t<1/3$ cutoff defines descriptive groups and trading filters. Trade count is an alternative check. Neither proxy measures order-book depth; high volume can accompany poor liquidity.
+
+\subsection{Statistical Inference}
+
+I refit the weekend-only model on Model~2's complete-case events, fixing sample composition when adding activity and controls. HC3 allows unequal residual variance; Holm guards H1 to H4 against chance findings. Month-block resampling probes within-month dependence; longer dependence may still leave intervals too narrow. Unmeasured news can affect shocks and subsequent returns, so coefficients describe associations, not causes.
+
+\subsection{Limitations}
+
+Sparse groups (\DevCombinedEvents{} and \HoCombinedEvents{} weekend low-activity events), a few influential shocks, missing order-book data, and unmodelled Binance and USDT risks limit inference and execution claims.
+
+\section{Pitfall Checklist}
+
+\subsection{Look-ahead bias}
+
+I checked features, events and trades separately. Changing later observations leaves earlier shock, activity and volatility inputs unchanged. Rolling histories exclude the shock return and volume; future outcomes cannot change cooldown decisions. Tests verify next-open entry after a completed shock, exact exits, gap rejection, unrounded calendar labels and split-contained outcomes. No future prices or returns enter signal construction. Trades crossing missing-data gaps are excluded retrospectively for evaluability, which limits the backtest's realism.
+
+\subsection{Survivorship bias}
+
+There is no retrospectively filtered asset universe: the study preselects one pair. Bitcoin and Binance nevertheless survived while other coins and venues failed. A collapsing coin might have more permanent sell-offs, so the result cannot be generalised to all crypto assets.
+
+\subsection{Overfitting/data-snooping}
+
+One primary setting, four trading rules and 12 robustness and diagnostic families were fixed before outcomes. No grid search or post-result tuning was used; corrections are logged. Holm adjusts H1 to H4 for multiple testing. Every frozen variant was run. The \DevWeekendNet{} development weekend gain failed held out.
+
+\subsection{Transaction costs and slippage}
+
+The assumed costs are 10~bp fees and 2~bp slippage per side. Low and high cases and delayed entry test sensitivity; market impact is unmodelled. Held-out all-shock return falls from \HoAllGross{} gross to \HoAllNet{} net. In that period, only the low-activity rule is positive before costs, breaking even at \HoLowBreakEven{} per side; all four primary rules lose net.
+
+\subsection{Out-of-sample validation}
+
+Development used 2020 to 2023; January 2024 to July 2026 was held out. Before access, an outcome-free audit flagged sparse cells and code, configuration, inputs and development results were frozen. One primary evaluation was accepted. Weekend return fell from \DevWeekendNet{} (Sharpe \DevWeekendSharpe{}) to \HoWeekendNet{} (Sharpe \HoWeekendSharpe{}). This is historical pseudo-out-of-sample evidence, not live performance.
+
+\section{Efficiency Touchpoint}
+
+The notebook benchmark identifies month-block regression bootstrapping as the bottleneck: ten development estimates required 100,000 refits and about 20 seconds ($N\le300$, $k\le9$), versus 4 seconds for features. Each draw samples whole months, rebuilds inputs and refits. For $S$ estimates, $B$ draws, $N$ events and $k$ regressors, time is about $O(SBNk^2)$; working memory per bootstrap is $O(Nk+B)$ for inputs and coefficient draws. Building each model matrix once and resampling its rows could reduce repeated work. The current run is practical and reproducible.
+
+\section{Risk Touchpoint}
+
+The account takes one unleveraged BTC position at a time, using 100\% of capital and holding USDT between trades. It remains concentrated in BTC, Binance and USDT. Held-out weekend exposure is \HoWeekendInvested{} of the time, yet maximum drawdown is \HoWeekendDrawdown{}; brief exposure does not ensure small losses. Five trades account for \HoWeekendTopFiveShare{} of absolute profit and loss. Lasting negative information could sustain a decline throughout the 12-hour hold while spreads widen. With no stop-loss, the account bears that decline. Full-capital sizing is a research convention.
+
+\section{Reflection}
+
+Cleaning was harder than the statistical tests: interruptions, a timestamp-unit switch and irregular closes needed explicit handling. Requiring complete covariates reduced the development sample from \DevSampleHOneN{} outcome-eligible shocks to \DevSampleHThreeN{} controlled-model events. The reproducible pipeline, validation checks and frozen rules made the findings auditable.
+
+I expected a positive 12-hour mean, but the development and held-out means were slightly negative. The low-activity weekend idea was unsupported; its exploratory interaction pointed the other way, with uncertain held-out robustness. I learned how convincing a \DevWeekendTrades{}-trade gain could look when a few trades drove it, and underestimated the effect of a 24~bp round trip. A plausible explanation and development profit must survive uncertainty, later data and costs before I can trust a rule.
+
+Next I would pre-register the unchanged rules on other pairs and exchanges, and test whether order-book depth explains activity associations. This rule showed no held-out net edge under the assumed costs.
+
+\begingroup
+\renewcommand{\section}[2]{\begin{center}\normalsize\scshape References\end{center}}
+\footnotesize
+\begin{thebibliography}{4}
+\setlength{\itemsep}{2pt}
+
+\bibitem{denicola}
+G.~De~Nicola, ``On the intraday behavior of Bitcoin,'' \emph{Ledger}, vol.~6, pp.~58 to 80, 2021, doi: \href{https://doi.org/10.5195/ledger.2021.213}{10.5195/ledger.2021.213}.
+
+\bibitem{miralles}
+J.~L.~Miralles-Quir\'os and M.~M.~Miralles-Quir\'os, ``Intraday Bitcoin price shocks: when bad news is good news,'' \emph{J. Appl. Econ.}, vol.~25, no.~1, pp.~1294 to 1313, 2022, doi: \href{https://doi.org/10.1080/15140326.2022.2151253}{10.1080/15140326.2022.2151253}.
+
+\bibitem{bianchi}
+D.~Bianchi, M.~Babiak, and A.~Dickerson, ``Trading volume and liquidity provision in cryptocurrency markets,'' \emph{J. Bank. Finance}, vol.~142, Art.~no.~106547, 2022, doi: \href{https://doi.org/10.1016/j.jbankfin.2022.106547}{10.1016/j.jbankfin.2022.106547}.
+
+\bibitem{binance}
+Binance, ``Binance Public Data,'' \href{https://github.com/binance/binance-public-data}{documentation}; BTCUSDT one-hour spot monthly archive: \url{https://data.binance.vision/?prefix=data/spot/monthly/klines/BTCUSDT/1h/}.
+
+\end{thebibliography}
+\endgroup
+
+\end{document}

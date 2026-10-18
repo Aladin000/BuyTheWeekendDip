@@ -1,0 +1,119 @@
+candidate_sha256: a77c7be1b04d11065f73c372125f670f507b00e7b3cd08695f441f7acfbf6eb5
+reviews:
+  - candidate_id: dq-c7212bfc9412490b
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain as a plausible extreme market move.
+  - candidate_id: dq-1a5c0a432e297a72
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain as a plausible extreme market move.
+  - candidate_id: dq-2cf05624b9b3f916
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain the small open gap between distinct trades.
+  - candidate_id: dq-c315d0f29f58da8a
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain the small open gap between distinct trades.
+  - candidate_id: dq-3e8732c5f2cf071c
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain the small open gap between distinct trades.
+  - candidate_id: dq-ee6a4017f8217cd2
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain as a plausible extreme market move.
+  - candidate_id: dq-2aa5b5801ef57114
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain as a plausible extreme market move.
+  - candidate_id: dq-736da843bb75a5e8
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain as a plausible extreme market move.
+  - candidate_id: dq-fee589a7bd378742
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain as a plausible extreme market move.
+  - candidate_id: dq-04567a0a6de56dc0
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain the plausible extreme move and small open gap.
+  - candidate_id: dq-bf6fe800665819a4
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain the small open gap between distinct trades.
+  - candidate_id: dq-695c346397adf0ea
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain the small open gap between distinct trades.
+  - candidate_id: dq-fa57193dc2d1a7a2
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain the small open gap between distinct trades.
+  - candidate_id: dq-951cc439e7550085
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain as a plausible extreme market move.
+  - candidate_id: dq-981efe2449b0e238
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain the small open gap between distinct trades.
+  - candidate_id: dq-8711917e22d9ea2b
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain as a plausible extreme market move.
+  - candidate_id: dq-3b8dc26e83a86d6e
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain as a plausible extreme market move.
+  - candidate_id: dq-5db22e7a0c664588
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain the small open gap between distinct trades.
+  - candidate_id: dq-310c357d06427d93
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain as a plausible extreme market move.
+  - candidate_id: dq-bb17a8712671007f
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain the small open gap between distinct trades.
+  - candidate_id: dq-18585ce8d8b6ce0a
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain the small open gap between distinct trades.
+  - candidate_id: dq-51f00a4a926c2a40
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain the small open gap between distinct trades.
+  - candidate_id: dq-bedce552b5f28f9a
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain as a plausible extreme market move.
+  - candidate_id: dq-4ee5e48ebde2d156
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain as a plausible extreme market move.
+  - candidate_id: dq-ee0a4e08aec71599
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain as a plausible extreme market move.
+  - candidate_id: dq-3b3a61b153d19718
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain the small open gap between distinct trades.
+  - candidate_id: dq-dd0285f157efc513
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain the small open gap between distinct trades.
+  - candidate_id: dq-4f382997dd5411d8
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain as a plausible extreme market move.
+  - candidate_id: dq-1c5113cd3d53db20
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain the small open gap between distinct trades.
+  - candidate_id: dq-5eee78ec4924cedb
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain the small open gap between distinct trades.
+  - candidate_id: dq-109b248e67e4105f
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain as a plausible extreme market move.
+  - candidate_id: dq-a0baee0a63957416
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain as a plausible extreme market move.
+  - candidate_id: dq-5396cb6a588552ad
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain the small open gap between distinct trades.
+  - candidate_id: dq-ff4f2b1ecfcad847
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain the small open gap between distinct trades.
+  - candidate_id: dq-a65b572a9b38d99b
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain as a plausible extreme market move.
+  - candidate_id: dq-71fd00cc199c1d74
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain as a plausible extreme market move.
+  - candidate_id: dq-0ba6890fdd54bb49
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain the small open gap between distinct trades.
+  - candidate_id: dq-5e6efeeb823199e7
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain the small open gap between distinct trades.
+  - candidate_id: dq-5f0f24ee58d18794
+    disposition: retain
+    reason: Checksum-verified row and neighbours have standard timestamps, valid OHLC bounds, and positive activity; retain as a plausible extreme market move.

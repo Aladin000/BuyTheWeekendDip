@@ -1,0 +1,14 @@
+analysis,model,term,sample_n,event_months,target_valid_replicates,maximum_attempts,attempted,valid,empty,rank_deficient,percentile_95_low,percentile_95_high,quantile_method,rng_stream,status
+weekend_vs_weekday,group_indicator,group_indicator,233,40,10000,20000,10000,10000,0,0,-0.002820256790140651,0.014150889672565638,numpy_linear,stage7:weekend_vs_weekday:group_indicator:group_indicator,complete
+low_vs_other_activity,group_indicator,group_indicator,158,25,10000,20000,10000,10000,0,0,-0.0074776230821183495,0.0097545937598616534,numpy_linear,stage7:low_vs_other_activity:group_indicator:group_indicator,complete
+combined_vs_remaining,group_indicator,group_indicator,158,25,10000,20000,10040,10000,0,40,-0.041056394680325702,-0.00039940594868865127,numpy_linear,stage7:combined_vs_remaining:group_indicator:group_indicator,complete
+model_inference,model0,intercept,233,40,10000,20000,10000,10000,0,0,-0.0043385551666648772,0.0017199654600951833,numpy_linear,stage7:model_inference:model0:intercept,complete
+model_inference,model1,weekend,233,40,10000,20000,10000,10000,0,0,-0.0027578875733385833,0.013864146702614629,numpy_linear,stage7:model_inference:model1:weekend,complete
+model_inference,model2,low_activity_score,158,25,10000,20000,10000,10000,0,0,-0.0099524577222868879,0.011763611790333287,numpy_linear,stage7:model_inference:model2:low_activity_score,complete
+model_inference,model2,weekend,158,25,10000,20000,10000,10000,0,0,-0.010205913815950408,0.016862854746215371,numpy_linear,stage7:model_inference:model2:weekend,complete
+model_inference,model3,weekend_x_low_activity_score,158,25,10000,20000,10000,10000,0,0,-0.084700677459005558,-0.013954320389348728,numpy_linear,stage7:model_inference:model3:weekend_x_low_activity_score,complete
+model_inference,positive_model0,intercept,235,44,10000,20000,10000,10000,0,0,-0.0016337447747969802,0.0067604747556039794,numpy_linear,stage7:model_inference:positive_model0:intercept,complete
+model_inference,positive_controlled,weekend,142,24,10000,20000,10000,10000,0,0,-0.011487969389753501,0.01049613635170467,numpy_linear,stage7:model_inference:positive_controlled:weekend,complete
+model_inference,positive_controlled,low_activity_score,142,24,10000,20000,10000,10000,0,0,-0.023812361436584814,0.022198559819267879,numpy_linear,stage7:model_inference:positive_controlled:low_activity_score,complete
+model_inference,h5_sign,positive,300,25,10000,20000,10000,10000,0,0,0.000484416724097728,0.0085372798300692773,numpy_linear,stage7:model_inference:h5_sign:positive,complete
+model_inference,h5_any_sign,positive,220,25,10000,20000,10000,10000,0,0,0.0016153933894866726,0.015392157527834162,numpy_linear,stage7:model_inference:h5_any_sign:positive,complete

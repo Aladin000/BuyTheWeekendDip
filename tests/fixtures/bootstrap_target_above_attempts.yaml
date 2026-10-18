@@ -1,0 +1,6 @@
+description: "The bootstrap target exceeds the attempt ceiling."
+expect_message_contains: "target_valid_replicates must not exceed max_attempts"
+operations:
+  - op: set
+    target: bootstrap.max_attempts
+    value: 5000

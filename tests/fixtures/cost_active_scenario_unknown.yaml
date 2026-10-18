@@ -1,0 +1,6 @@
+description: "The active cost scenario is not one of the declared scenarios."
+expect_message_contains: "is not a declared scenario"
+operations:
+  - op: set
+    target: costs.active_scenario
+    value: "medium"

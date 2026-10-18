@@ -1,0 +1,6 @@
+description: "The significance level leaves the open unit interval."
+expect_message_contains: "must be < 1.0"
+operations:
+  - op: set
+    target: inference.alpha
+    value: 1.5

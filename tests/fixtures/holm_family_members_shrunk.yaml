@@ -1,0 +1,6 @@
+description: "The Holm family is shrunk below the pre-specified four slots."
+expect_message_contains: "expected exactly 4 entries"
+operations:
+  - op: set
+    target: inference.holm.members
+    value: ["H1_model0", "H2_model1", "H3_model2"]

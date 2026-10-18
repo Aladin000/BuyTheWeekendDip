@@ -1,0 +1,6 @@
+description: "An undeclared top-level section is added."
+expect_message_contains: "unknown key(s) ['extra_section']"
+operations:
+  - op: set
+    target: extra_section
+    value: "anything"

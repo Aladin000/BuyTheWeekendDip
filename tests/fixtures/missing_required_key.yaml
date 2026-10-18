@@ -1,0 +1,5 @@
+description: "A required leaf key is absent."
+expect_message_contains: "missing required key(s) ['window_hours']"
+operations:
+  - op: delete
+    target: shock.window_hours

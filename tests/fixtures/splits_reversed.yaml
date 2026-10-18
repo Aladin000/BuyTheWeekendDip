@@ -1,0 +1,6 @@
+description: "A split ends before it starts."
+expect_message_contains: "must precede end"
+operations:
+  - op: set
+    target: splits.held_out.end_exclusive
+    value: "2023-01-01T00:00:00Z"

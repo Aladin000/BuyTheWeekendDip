@@ -1,0 +1,6 @@
+description: "The declared last archive month disagrees with the coverage end."
+expect_message_contains: "does not match the coverage end month"
+operations:
+  - op: set
+    target: source.last_month
+    value: "2026-06"

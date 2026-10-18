@@ -1,0 +1,6 @@
+description: "The holding period diverges from the primary outcome horizon."
+expect_message_contains: "hold_hours must equal the primary outcome horizon"
+operations:
+  - op: set
+    target: strategy.hold_hours
+    value: 6

@@ -1,0 +1,6 @@
+description: "A mapping section is replaced by a scalar."
+expect_message_contains: "expected a mapping, got str"
+operations:
+  - op: set
+    target: splits.development
+    value: "2020-01-01"

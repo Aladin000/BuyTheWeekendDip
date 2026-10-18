@@ -1,0 +1,6 @@
+description: "The millisecond-to-microsecond change falls outside coverage."
+expect_message_contains: "unit_change_at must fall inside the acquisition coverage"
+operations:
+  - op: set
+    target: timestamps.unit_change_at
+    value: "2027-01-01T00:00:00Z"

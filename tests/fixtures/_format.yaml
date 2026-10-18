@@ -1,0 +1,23 @@
+# Fail-closed mutation fixtures.
+#
+# Every file in this directory whose name does not start with an underscore
+# describes one conceptual mutation of config/project.yaml that must be
+# rejected. Storing the mutation rather than a whole copied configuration
+# keeps the fixtures from drifting out of step with the real file when a
+# value is legitimately amended through change control.
+#
+# Format:
+#
+#   description: what the mutation represents
+#   expect_message_contains: substring the ConfigError message must contain
+#   operations:
+#     - op: delete | set
+#       target: dotted key path, for example shock.window_hours
+#       value: replacement value, required for "set"
+#
+# Almost every fixture uses a single operation. The only exception is
+# short_warmup.yaml: the acquisition start and the warm-up split start are
+# locked equal to each other, so moving the acquisition start is one
+# conceptual change expressed as two edits.
+
+description: "Format documentation only. Files starting with '_' are not collected."

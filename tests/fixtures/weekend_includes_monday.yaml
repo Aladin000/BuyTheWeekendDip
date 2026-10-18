@@ -1,0 +1,6 @@
+description: "Monday is classified as a weekend day."
+expect_message_contains: "Monday must not be listed as a weekend day"
+operations:
+  - op: set
+    target: calendar.weekend_iso_weekdays
+    value: [1, 6]

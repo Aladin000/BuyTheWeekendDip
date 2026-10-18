@@ -1,0 +1,6 @@
+description: "A cost rate is negative."
+expect_message_contains: "must be >= 0.0"
+operations:
+  - op: set
+    target: costs.scenarios.primary.slippage_per_side
+    value: -0.0002

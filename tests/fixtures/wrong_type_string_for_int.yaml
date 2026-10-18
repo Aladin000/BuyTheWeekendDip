@@ -1,0 +1,6 @@
+description: "A locked integer is quoted as a string."
+expect_message_contains: "expected an integer, got str"
+operations:
+  - op: set
+    target: shock.window_hours
+    value: "720"

@@ -1,0 +1,6 @@
+description: "The secondary H5 test is pulled into the H1-H4 family."
+expect_message_contains: "H5 sits outside the H1-H4 family"
+operations:
+  - op: set
+    target: inference.h5.in_holm_family
+    value: true

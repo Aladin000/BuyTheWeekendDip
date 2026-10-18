@@ -1,0 +1,6 @@
+description: "The absolute and relative tolerances diverge."
+expect_message_contains: "tolerances are locked equal"
+operations:
+  - op: set
+    target: reproducibility.rtol
+    value: 1.0e-10

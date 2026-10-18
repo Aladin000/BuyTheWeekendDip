@@ -1,0 +1,6 @@
+description: "A list value is replaced by a scalar."
+expect_message_contains: "expected a list, got int"
+operations:
+  - op: set
+    target: outcomes.secondary_horizon_hours
+    value: 6

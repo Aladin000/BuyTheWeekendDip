@@ -1,0 +1,3 @@
+{"event": "run_log_opened", "recorded_at_utc": "2026-09-09T15:12:16Z", "run_id": "20260909T151216.933690Z-held-out-29425d57-643db4"}
+{"event": "held_out_evaluation_started", "freeze_manifest": "outputs/runs/20260909T150846.667673Z-freeze-29425d57-a5078e/held-out-freeze.manifest.json", "papers_used_as_analytical_inputs": false, "reason": "primary_pre_authorised_historical_evaluation", "recorded_at_utc": "2026-09-09T15:12:16Z", "run_id": "20260909T151216.933690Z-held-out-29425d57-643db4"}
+{"detail": "held-out execution requires a clean repository", "event": "held_out_evaluation_failed", "papers_used_as_analytical_inputs": false, "reason": "FreezeError", "recorded_at_utc": "2026-09-09T15:12:17Z", "run_id": "20260909T151216.933690Z-held-out-29425d57-643db4"}

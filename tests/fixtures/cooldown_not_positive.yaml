@@ -1,0 +1,6 @@
+description: "The event cooldown is set to zero hours."
+expect_message_contains: "must be > 0"
+operations:
+  - op: set
+    target: events.cooldown_hours
+    value: 0

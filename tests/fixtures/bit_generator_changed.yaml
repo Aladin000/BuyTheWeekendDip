@@ -1,0 +1,6 @@
+description: "A bit generator other than PCG64 is requested."
+expect_message_contains: "is not one of ['PCG64']"
+operations:
+  - op: set
+    target: reproducibility.bit_generator
+    value: "MT19937"

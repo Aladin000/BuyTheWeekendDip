@@ -1,0 +1,6 @@
+description: "The verified field names cannot coexist with a false schema flag."
+expect_message_contains: "must stay null until the source schema is verified"
+operations:
+  - op: set
+    target: source.schema_verified
+    value: false

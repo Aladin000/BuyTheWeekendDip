@@ -1,0 +1,6 @@
+description: "A boundary falls inside an hour."
+expect_message_contains: "is not aligned to a whole UTC hour"
+operations:
+  - op: set
+    target: splits.development.start_inclusive
+    value: "2020-01-01T00:30:00Z"
