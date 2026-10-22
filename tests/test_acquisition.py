@@ -758,10 +758,43 @@ def test_s2_11_the_readme_is_written_once_and_then_reverified(
     assert content == render_raw_readme(config)
     assert "82 monthly archives" in content
     assert "data.binance.vision" in content
+    assert "(PROJECT_SPEC.md section 7.4 line 232)" in content
+    assert "01_PROJECT_SPEC.md" not in content
 
     again_digest, again_status = ensure_raw_readme(config)
     assert (again_digest, again_status) == (digest, "reverified")
     assert target.read_text(encoding="utf-8") == content
+
+
+def test_s2_11_the_preserved_snapshot_readme_is_reverified(
+    config, temp_acquisition_root
+) -> None:
+    preserved = (Path(__file__).resolve().parents[1] / "data/raw/README.md").read_bytes()
+    target = temp_acquisition_root / raw_readme_relative_path(config)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes(preserved)
+
+    digest, status = ensure_raw_readme(config)
+
+    assert status == "reverified"
+    assert digest == sha256_bytes(preserved)
+    assert digest != sha256_bytes(render_raw_readme(config).encode("utf-8"))
+    assert target.read_bytes() == preserved
+
+
+def test_s2_11_a_modified_historical_readme_fails_closed(
+    config, temp_acquisition_root
+) -> None:
+    preserved = (Path(__file__).resolve().parents[1] / "data/raw/README.md").read_bytes()
+    modified = preserved.replace(b"82 monthly archives", b"81 monthly archives")
+    assert modified != preserved
+    target = temp_acquisition_root / raw_readme_relative_path(config)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes(modified)
+
+    with pytest.raises(AcquisitionError, match="differs from the description"):
+        ensure_raw_readme(config)
+    assert target.read_bytes() == modified
 
 
 def test_s2_11_a_divergent_readme_fails_closed(config, temp_acquisition_root) -> None:

@@ -709,7 +709,8 @@ def raw_readme_relative_path(config: ConfigNode) -> Path:
 def ensure_raw_readme(config: ConfigNode) -> tuple[str, str]:
     """Write the raw-data README once, then require it to stay identical.
 
-    On later runs, different bytes stop with an error instead of being overwritten.
+    The preserved snapshot may use the historical spec filename. All other
+    differences stop with an error instead of being overwritten.
     """
     relative = raw_readme_relative_path(config)
     content = render_raw_readme(config)
@@ -717,13 +718,20 @@ def ensure_raw_readme(config: ConfigNode) -> tuple[str, str]:
     target = paths.resolve(relative)
     if target.is_file():
         stored = target.read_bytes()
-        if stored != payload:
+        # Accept only the exact historical reference; the rest must still match
+        # the description generated from this configuration byte for byte.
+        historical_payload = payload.replace(
+            b"or repairs them (PROJECT_SPEC.md section 7.4 line 232).",
+            b"or repairs them (01_PROJECT_SPEC.md section 7.4 line 232).",
+            1,
+        )
+        if stored not in (payload, historical_payload):
             raise AcquisitionError(
                 f"{relative.as_posix()} differs from the description this configuration "
                 "generates. Raw files are not overwritten: review the difference and "
                 "resolve it by hand"
             )
-        return sha256_bytes(payload), "reverified"
+        return sha256_bytes(stored), "reverified"
     create_exclusive(relative, content)
     return sha256_bytes(payload), "written"
 
