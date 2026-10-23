@@ -3,7 +3,6 @@
 **Project:** Buy the Weekend Dip?  
 **Subtitle:** Bitcoin Reversals After Extreme Sell-Offs: Weekend Timing or Market Activity?  
 **Specification version:** 1.5
-**Research protocol frozen:** 4 September 2026
 
 This document describes the project's research design and computational definitions. The methodological choices were fixed before outcome inspection; the text presents those choices for the completed project.
 
